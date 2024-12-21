@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "N0kvqD6KIqVWkboFn0+fPdkr5VywRkEQj8w35/SRnk8=",
+  "Source": "FastFoodDeliveryApi",
+  "BasePath": "_content/FastFoodDeliveryApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

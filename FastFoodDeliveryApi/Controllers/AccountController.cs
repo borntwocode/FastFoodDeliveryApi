@@ -52,7 +52,7 @@ public class AccountController : ControllerBase
 
         var token = _tokenService.GenerateRegisterToken(model, verificationCode);
         
-        return Ok(new { RegistrationToken = token });
+        return Ok(new { Message = "Verification code sent successfully. Verify Your Email", RegistrationToken = token });
     }
     
     [HttpPost]
@@ -78,23 +78,34 @@ public class AccountController : ControllerBase
             var password = registrationData["Password"];
             var verificationCode = registrationData["VerificationCode"];
 
+            var customerRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Customer");
+
+            if (customerRole == null)
+            {
+                return BadRequest("Customer role not found.");
+            }
+            
+            var customerRoleList = new List<Role> { customerRole };
+            
             var user = new User
             {
                 FirstName = firstName,
                 Email = email,
-                Password = password
+                Password = password,
+                Roles = customerRoleList
             };
         
             if(model.VerificationCode != verificationCode)
                 return BadRequest("Invalid Verification Code.");
 
-            if (!await _context.Users.AnyAsync(u => u.Email == user.Email))
+            if (await _context.Users.AnyAsync(u => u.Email == user.Email))
             {
-                await _context.Users.AddAsync(user);
-                await _context.SaveChangesAsync();
-                return Ok("Email verified successfully.");
+                return BadRequest("Email already registered.");
             }
-            return BadRequest("Something went wrong.");
+
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+            return Ok("Email registered successfully.");
         }
 
         if (model.VerificationToken.StartsWith(TokenService.ResetPasswordToken))
@@ -158,7 +169,7 @@ public class AccountController : ControllerBase
         }
         
         var resetPasswordToken = _tokenService.GenerateResetPasswordToken(model.Email, verificationCode);
-        return Ok(new { ResetPasswordToken = resetPasswordToken });
+        return Ok(new { Message = "Verification code sent successfully. Verify Your Email", ResetPasswordToken = resetPasswordToken });
     }
 
     [HttpPost]

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using FastFoodDeliveryApi.Configurations;
 using Microsoft.OpenApi.Models;
 using FastFoodDeliveryApi.Data;
+using FastFoodDeliveryApi.Data.Seeder;
 using FastFoodDeliveryApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddJwtAuthentication(jwtKey);
 // Add DbContext (you need to pass the connection string or configure it appropriately)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))); // Change this line to match your database setup
+builder.Services.AddScoped<DatabaseSeeder>();
 
 // Add other services
 builder.Services.AddScoped<TokenService>();
@@ -59,6 +61,13 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+// Seed database
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
+    await seeder.SeedRolesAsync();
+}
 
 // Use Swagger only in the Development environment
 if (app.Environment.IsDevelopment())

@@ -3769,23 +3769,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\user\\.nuget\\packages\\": {},
+    "C:\\Users\\WorkStation\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\RiderProjects\\FastFoodDeliveryApi\\FastFoodDeliveryApi\\FastFoodDeliveryApi.csproj",
+      "projectUniqueName": "C:\\Users\\WorkStation\\RiderProjects\\FastFoodDeliveryApi\\FastFoodDeliveryApi\\FastFoodDeliveryApi.csproj",
       "projectName": "FastFoodDeliveryApi",
-      "projectPath": "C:\\Users\\user\\RiderProjects\\FastFoodDeliveryApi\\FastFoodDeliveryApi\\FastFoodDeliveryApi.csproj",
-      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user\\RiderProjects\\FastFoodDeliveryApi\\FastFoodDeliveryApi\\obj\\",
+      "projectPath": "C:\\Users\\WorkStation\\RiderProjects\\FastFoodDeliveryApi\\FastFoodDeliveryApi\\FastFoodDeliveryApi.csproj",
+      "packagesPath": "C:\\Users\\WorkStation\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\WorkStation\\RiderProjects\\FastFoodDeliveryApi\\FastFoodDeliveryApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\WorkStation\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

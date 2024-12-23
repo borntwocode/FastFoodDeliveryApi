@@ -28,6 +28,7 @@ public class UserController : ControllerBase
         }
         var users = await _context.Users
             .Include(user => user.UserAddress)
+            .Include(user => user.Roles)
             .ToListAsync();
         return Ok(users);
     }
@@ -82,6 +83,7 @@ public class UserController : ControllerBase
             {
                 var userAddress = new UserAddress
                 {
+                    Id = Guid.NewGuid(),
                     City = baseAddress.City,
                     County = baseAddress.County,
                     Residential = baseAddress.Residential,
@@ -102,6 +104,47 @@ public class UserController : ControllerBase
             return Ok(new { Message = "User address updated successfully.", Address = baseAddress });
         }
         return BadRequest(new { Message = "Invalid coordinates. Try again." });
+    }
+
+    [HttpPut]
+    [Route("SetPhotoId")]
+    public async Task<IActionResult> SetPhotoId([FromBody] UserPhotoModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        var userId = model.UserId;
+        var photoId = model.PhotoId;
+        
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null)
+        {
+            return NotFound($"User with ID {userId} not found.");
+        }
+
+        if (!await _context.Files.AnyAsync(file => file.FileId == photoId))
+        {
+            return BadRequest(new { Message = "Photo not found." });
+        }
+        
+        user.ProfilePictureId = photoId;
+        await _context.SaveChangesAsync();
+        return Ok(new { message = "User photo updated successfully." });
+    }
+    
+    [HttpDelete]
+    [Route("DeleteUser")]
+    public async Task<IActionResult> DeleteUser(Guid userId)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null)
+        {
+            return NotFound($"User with ID {userId} not found.");
+        }
+        _context.Users.Remove(user);
+        await _context.SaveChangesAsync();
+        return Ok(new { Message = "User deleted successfully." });
     }
     
 }

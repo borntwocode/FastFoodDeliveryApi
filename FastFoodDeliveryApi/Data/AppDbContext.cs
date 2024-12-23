@@ -12,5 +12,6 @@ public class AppDbContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<Restaurant> Restaurants { get; set; }
     public DbSet<RestaurantAddress> RestaurantAddresses { get; set; }
+    public DbSet<Models.Entities.File> Files { get; set; }
     
 }
